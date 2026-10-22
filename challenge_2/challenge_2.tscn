@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://challenge_2/enemy.tscn" id="1_enemy"]
+[ext_resource type="Script" path="res://challenge_2/target.gd" id="2_target"]
+
+[node name="Challenge2" type="Node2D"]
+
+[node name="Target" type="Node2D" parent="."]
+position = Vector2(800, 400)
+script = ExtResource("2_target")
+
+[node name="Visual" type="Polygon2D" parent="Target"]
+color = Color(0.3, 0.9, 0.4, 1)
+polygon = PackedVector2Array(0, -18, 18, 0, 0, 18, -18, 0)
+
+[node name="PatrolEnemy" parent="." instance=ExtResource("1_enemy")]
+position = Vector2(300, 200)
+enemy_type = "patrol"
+
+[node name="ChaseEnemy" parent="." node_paths=PackedStringArray("target") instance=ExtResource("1_enemy")]
+position = Vector2(300, 450)
+enemy_type = "chase"
+target = NodePath("../Target")
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 600.0
+offset_right = 1100.0
+offset_bottom = 626.0
+text = "Arrows: move the green target.  Top enemy patrols; bottom enemy chases the target."
